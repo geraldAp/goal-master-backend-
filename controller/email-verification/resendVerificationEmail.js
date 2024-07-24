@@ -1,9 +1,9 @@
 const fs = require("fs");
 const path = require("path");
-const User = require("../../model/user");
-const Verification = require("../../model/user");
+const User = require("../../model/user").default;
+const Verification = require("../../model/user").default;
 const jwt = require("jsonwebtoken");
-const { transporter } = require("../../helpers/transporter");
+const { transporter } = require("../../helpers/transporter").default;
 
 const resendVerificationEmail = async (req, res) => {
   const { email } = req.body;

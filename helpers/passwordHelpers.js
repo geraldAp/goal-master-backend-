@@ -1,9 +1,9 @@
-const bcrypt = require("bcrypt");
+import { hash, compare } from "bcrypt";
 
 const encryptPassword = async (password) => {
   try {
     const saltRounds = 10;
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    const hashedPassword = await hash(password, saltRounds);
     return hashedPassword;
   } catch (error) {
     console.error("Error encrypting password:", error);
@@ -13,7 +13,7 @@ const encryptPassword = async (password) => {
 
 const comparePassword = async (password, dbPassword) => {
   try {
-    const isPasswordValid = await bcrypt.compare(password, dbPassword);
+    const isPasswordValid = await compare(password, dbPassword);
     return isPasswordValid;
   } catch (error) {
     console.error("Error comparing passwords:", error);
@@ -22,4 +22,4 @@ const comparePassword = async (password, dbPassword) => {
 };
 
 
-module.exports = {encryptPassword, comparePassword}
+export default {encryptPassword, comparePassword}

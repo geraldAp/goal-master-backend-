@@ -1,20 +1,20 @@
 require("dotenv").config();
-const express = require("express");
-const cors = require("cors");
-const dbConnect = require("./configs/dbConnect");
-const errorHandler = require("./middleware/errorHandler");
-const notFoundHandler = require("./middleware/notFoundHandler");
-const logger = require("./middleware/logger");
-const authRoutes = require("./routes/authRoute");
-const goalRoutes = require("./routes/goalsRoute");
-const verificationRoutes = require("./routes/verificationRoute");
-const resetPasswordRoutes = require('./routes/resetPasswordRoute')
+import express, { urlencoded, json } from "express";
+import cors from "cors";
+import dbConnect from "./configs/dbConnect";
+import errorHandler from "./middleware/errorHandler";
+import notFoundHandler from "./middleware/notFoundHandler";
+import logger from "./middleware/logger";
+import authRoutes from "./routes/authRoute";
+import goalRoutes from "./routes/goalsRoute";
+import verificationRoutes from "./routes/verificationRoute";
+import resetPasswordRoutes from './routes/resetPasswordRoute';
 const app = express();
 
 // general middle wares
 app.use(cors());
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+app.use(urlencoded({ extended: true }));
+app.use(json());
 
 // mongo connection
 dbConnect();

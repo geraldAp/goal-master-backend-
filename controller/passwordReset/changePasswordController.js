@@ -1,6 +1,6 @@
-const User = require("../../model/user");
-const { comparePassword } = require("../../helpers/passwordHelpers");
-const { encryptPassword } = require("../../helpers/passwordHelpers");
+const User = require("../../model/user").default;
+const { comparePassword } = require("../../helpers/passwordHelpers").default;
+const { encryptPassword } = require("../../helpers/passwordHelpers").default;
 
 const changePassword = async (req, res) => {
   const { email, oldPassword, newPassword } = req.body;

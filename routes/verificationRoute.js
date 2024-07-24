@@ -1,15 +1,10 @@
-const express = require("express");
-const router = express.Router();
-const {
-  getVerificationEmailPage,
-  verifyEmail,
-} = require("../controller/email-verification/verifyEmailController");
-const {
-  resendVerificationEmail,
-} = require("../controller/email-verification/resendVerificationEmail");
+import { Router } from "express";
+import { getVerificationEmailPage, verifyEmail } from "../controller/email-verification/verifyEmailController";
+import { resendVerificationEmail } from "../controller/email-verification/resendVerificationEmail";
+const router = Router();
 
 router.route("/verify-email").get(getVerificationEmailPage).post(verifyEmail);
 router.post("/resend-verification-email", resendVerificationEmail);
 
 
-module.exports = router;
+export default router;

@@ -1,8 +1,8 @@
 const fs = require("fs");
 const path = require("path");
-const User = require("../../model/user");
+const User = require("../../model/user").default;
 const jwt = require("jsonwebtoken");
-const Verification = require("../../model/verification");
+const Verification = require("../../model/verification").default;
 
 const getVerificationEmailPage = async (req, res) => {
   const { token } = req.query;

@@ -1,8 +1,8 @@
-const mongoose = require('mongoose')
+import { connect } from 'mongoose';
 
 const dbConnectionHandler = async () => {
     try {
-        await mongoose.connect(process.env.MONGO_URI)
+        await connect(process.env.MONGO_URI)
         console.log('MongoDB has connected successfully');
     } catch (error) {
         console.error('Error connecting to MongoDB:', error);
@@ -10,4 +10,4 @@ const dbConnectionHandler = async () => {
 }
 
 
-module.exports = dbConnectionHandler
+export default dbConnectionHandler

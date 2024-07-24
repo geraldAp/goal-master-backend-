@@ -1,6 +1,6 @@
-const Goal = require("../../model/goals");
-const Task = require("../../model/task");
-const cloudinary = require('../../configs/cloudinaryConfig')
+const Goal = require("../../model/goals").default;
+const Task = require("../../model/task").default;
+const cloudinary = require('../../configs/cloudinaryConfig').default
 const fs = require('fs');
 const getAllGoals = async (req, res) => {
   console.log("getting goal");

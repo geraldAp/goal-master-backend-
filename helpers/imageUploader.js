@@ -1,23 +1,23 @@
 // middlewares/multerConfig.js
-const multer = require('multer');
-const path = require('path');
-const fs = require('fs');
+import multer, { diskStorage } from 'multer';
+import { join, extname } from 'path';
+import { existsSync, mkdirSync } from 'fs';
 
 // Ensure the temp directory exists
-const tempDir = path.join(__dirname, 'temp');
-if (!fs.existsSync(tempDir)) {
-  fs.mkdirSync(tempDir, { recursive: true });
+const tempDir = join(__dirname, 'temp');
+if (!existsSync(tempDir)) {
+  mkdirSync(tempDir, { recursive: true });
 }
 
-const storage = multer.diskStorage({
+const storage = diskStorage({
   destination: function (req, file, cb) {
     cb(null, tempDir); // Use the temp directory
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + path.extname(file.originalname)); // Unique filename
+    cb(null, Date.now() + extname(file.originalname)); // Unique filename
   },
 });
 
 const upload = multer({ storage: storage });
 
-module.exports = {upload};
+export default {upload};

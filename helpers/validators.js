@@ -1,9 +1,9 @@
-const Joi = require("joi");
+import { object, string } from "joi";
 
 
 const validateUserSignUpCredentials = (firstName, lastName, userName, email, password) => {
-    const schema = Joi.object({
-      firstName: Joi.string()
+    const schema = object({
+      firstName: string()
         .min(2)
         .required()
         .messages({
@@ -11,7 +11,7 @@ const validateUserSignUpCredentials = (firstName, lastName, userName, email, pas
           "any.required": "First Name is required",
           "string.min": "First Name must be at least 6 characters long",
         }),
-      lastName: Joi.string()
+      lastName: string()
         .min(2)
         .required()
         .messages({
@@ -19,7 +19,7 @@ const validateUserSignUpCredentials = (firstName, lastName, userName, email, pas
           "any.required": "Last Name is required",
           "string.min": "Last Name must be at least 6 characters long",
         }),
-      userName: Joi.string()
+      userName: string()
         .min(3)
         .required()
         .messages({
@@ -27,7 +27,7 @@ const validateUserSignUpCredentials = (firstName, lastName, userName, email, pas
           "any.required": "User Name is required",
           "string.min": "User Name must be at least 6 characters long",
         }),
-      email: Joi.string()
+      email: string()
         .email({ minDomainSegments: 2, tlds: { allow: ["com", "net"] } })
         .required()
         .messages({
@@ -35,7 +35,7 @@ const validateUserSignUpCredentials = (firstName, lastName, userName, email, pas
           "string.empty": "Email is required",
           "any.required": "Email is required",
         }),
-      password: Joi.string()
+      password: string()
         .min(6)
         .required()
         .messages({
@@ -69,8 +69,8 @@ const validateUserSignUpCredentials = (firstName, lastName, userName, email, pas
     };
   };
 const validateUserLoginCredentials = (userName, password) => {
-  const schema = Joi.object({
-    userName: Joi.string()
+  const schema = object({
+    userName: string()
       .min(6) // Example: Minimum 6 characters
       .required()
       .messages({
@@ -78,7 +78,7 @@ const validateUserLoginCredentials = (userName, password) => {
         "any.required": "User Name is required",
         "string.min": "User Name must be at least 6 characters long",
       }),
-    password: Joi.string()
+    password: string()
       .min(6) // Example: Minimum 6 characters
       .required()
       .messages({
@@ -107,4 +107,4 @@ const validateUserLoginCredentials = (userName, password) => {
   };
 };
 
-module.exports = {validateUserSignUpCredentials , validateUserLoginCredentials}
+export default {validateUserSignUpCredentials , validateUserLoginCredentials}

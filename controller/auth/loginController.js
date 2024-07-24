@@ -1,11 +1,11 @@
-const User = require("../../model/user");
-const RefreshToken = require("../../model/refreshToken");
-const { validateUserLoginCredentials } = require("../../helpers/validators");
-const { comparePassword } = require("../../helpers/passwordHelpers");
+const User = require("../../model/user").default;
+const RefreshToken = require("../../model/refreshToken").default;
+const { validateUserLoginCredentials } = require("../../helpers/validators").default;
+const { comparePassword } = require("../../helpers/passwordHelpers").default;
 const {
   generateRefreshToken,
   generateAccessToken,
-} = require("../../helpers/generateTokens");
+} = require("../../helpers/generateTokens").default;
 const { use } = require("bcrypt/promises");
 const handleLogin = async (req, res) => {
   try {

@@ -1,4 +1,4 @@
-const jwt = require("jsonwebtoken");
+import { verify } from "jsonwebtoken";
 
 const authMiddleware = (req, res, next) => {
   try {
@@ -14,7 +14,7 @@ const authMiddleware = (req, res, next) => {
     const token = authHeader.split(" ")[1];
 
     // Verify the token
-    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
+    verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
       if (err) {
         return res.status(403).json({ error: "Forbidden, invalid token" });
       }
@@ -31,4 +31,4 @@ const authMiddleware = (req, res, next) => {
   }
 };
 
-module.exports = authMiddleware;
+export default authMiddleware;

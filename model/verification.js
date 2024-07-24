@@ -1,9 +1,9 @@
-const mongoose = require('mongoose');
+import mongoose, { Schema as _Schema, model } from 'mongoose';
 const { Schema } = mongoose;
 
 const VerificationSchema = new Schema({
   userId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: _Schema.Types.ObjectId,
     required: true,
     ref: 'User',
   },
@@ -18,4 +18,4 @@ const VerificationSchema = new Schema({
   },
 });
 
-module.exports = mongoose.model('Verification', VerificationSchema);
+export default model('Verification', VerificationSchema);

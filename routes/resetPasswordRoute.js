@@ -1,17 +1,12 @@
-const express = require("express");
-const router = express.Router();
-const {
-  ResetPasswordLink,
-  resetPassword,
-} = require("../controller/passwordReset/forgotPasswordController");
-const authMiddleWare = require("../middleware/verifyJwt");
-const {
-  changePassword,
-} = require("../controller/passwordReset/changePasswordController");
+import { Router } from "express";
+const router = Router();
+import { ResetPasswordLink, resetPassword } from "../controller/passwordReset/forgotPasswordController";
+import authMiddleWare from "../middleware/verifyJwt";
+import { changePassword } from "../controller/passwordReset/changePasswordController";
 
 router.post("/forgot-password-reset-link", ResetPasswordLink);
 router.put("/forgot-password-reset", resetPassword);
 router.use(authMiddleWare);
 router.put("/change-password", changePassword);
 
-module.exports = router;
+export default router;

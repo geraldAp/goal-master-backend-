@@ -1,11 +1,11 @@
 const fs = require("fs");
 const path = require("path");
-const User = require("../../model/user");
-const Verification = require("../../model/verification");
+const User = require("../../model/user").default;
+const Verification = require("../../model/verification").default;
 const jwt = require("jsonwebtoken");
-const { validateUserSignUpCredentials } = require("../../helpers/validators");
-const { encryptPassword } = require("../../helpers/passwordHelpers");
-const { transporter } = require("../../helpers/transporter");
+const { validateUserSignUpCredentials } = require("../../helpers/validators").default;
+const { encryptPassword } = require("../../helpers/passwordHelpers").default;
+const { transporter } = require("../../helpers/transporter").default;
 
 const signUp = async (req, res) => {
   try {

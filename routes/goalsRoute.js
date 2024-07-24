@@ -1,21 +1,9 @@
-const express = require("express");
-const {
-  getAllGoals,
-  createGoal,
-  getGoal,
-  updateGoal,
-  deleteGoal,
-  deleteAllGoals, // If needed, add a route for this
-} = require("../controller/goals/goalController");
-const {
-  getAllTasks,
-  createTask,
-  deleteTask,
-  updateTask,
-} = require("../controller/goals/tasksController");
-const authMiddleWare = require("../middleware/verifyJwt");
-const { upload } = require("../helpers/imageUploader");
-const router = express.Router();
+import { Router } from "express";
+import { getAllGoals, createGoal, getGoal, updateGoal, deleteGoal, deleteAllGoals } from "../controller/goals/goalController";
+import { getAllTasks, createTask, deleteTask, updateTask } from "../controller/goals/tasksController";
+import authMiddleWare from "../middleware/verifyJwt";
+import { upload } from "../helpers/imageUploader";
+const router = Router();
 
 // Apply middleware to all routes
 router.use(authMiddleWare);
@@ -30,4 +18,4 @@ router.route("/").delete(deleteAllGoals);
 router.route("/:id/tasks").get(getAllTasks).post(createTask);
 router.delete("/:id/task", deleteTask);
 router.put("/:id/task/:goalId", updateTask);
-module.exports = router;
+export default router;
