@@ -1,9 +1,14 @@
-const fs = require("fs");
-const path = require("path");
-const User = require("../../model/user").default;
-const Verification = require("../../model/user").default;
-const jwt = require("jsonwebtoken");
-const { transporter } = require("../../helpers/transporter").default;
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import User from '../../model/user.js';
+import Verification from '../../model/verification.js';
+import jwt from 'jsonwebtoken';
+import { transporter } from '../../helpers/transporter.js';
+
+// Get __dirname in ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const resendVerificationEmail = async (req, res) => {
   const { email } = req.body;
@@ -17,29 +22,31 @@ const resendVerificationEmail = async (req, res) => {
     if (user.isVerified) {
       return res.status(400).json({ message: "User is already verified" });
     }
+
     const filePath = path.join(
       __dirname,
       "../../views/verificationEmailTemplate.html"
     );
 
-    if (err) {
-      console.error("Error reading email template:", err);
-      return res.status(500).json({ message: "Server error" });
-    }
-    const verificationToken = jwt.sign(
-      { userId: user._id },
-      process.env.JWT_SECRET,
-      { expiresIn: "6h" }
-    );
-
-    await Verification.findOneAndUpdate(
-      { userId: user._id },
-      { token: verificationToken, createdAt: Date.now() },
-      { upsert: true }
-    );
-    const verificationLink = `http://localhost:8080/api/verification/verify-email?token=${verificationToken}`;
-
     fs.readFile(filePath, "utf8", async (err, html) => {
+      if (err) {
+        console.error("Error reading email template:", err);
+        return res.status(500).json({ message: "Server error" });
+      }
+
+      const verificationToken = jwt.sign(
+        { userId: user._id },
+        process.env.JWT_SECRET,
+        { expiresIn: "6h" }
+      );
+
+      await Verification.findOneAndUpdate(
+        { userId: user._id },
+        { token: verificationToken, createdAt: Date.now() },
+        { upsert: true }
+      );
+
+      const verificationLink = `http://localhost:8080/api/verification/verify-email?token=${verificationToken}`;
       const emailHtml = html.replace("{{verificationLink}}", verificationLink);
       const mailOptions = {
         from: process.env.EMAIL,
@@ -47,6 +54,7 @@ const resendVerificationEmail = async (req, res) => {
         subject: "Email Verification",
         html: emailHtml,
       };
+
       transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
           console.error("Error sending email:", error);
@@ -63,4 +71,4 @@ const resendVerificationEmail = async (req, res) => {
   }
 };
 
-module.exports = { resendVerificationEmail };
+export { resendVerificationEmail };

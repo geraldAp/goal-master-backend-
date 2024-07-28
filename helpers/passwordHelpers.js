@@ -1,6 +1,6 @@
 import { hash, compare } from "bcrypt";
 
-const encryptPassword = async (password) => {
+export const encryptPassword = async (password) => {
   try {
     const saltRounds = 10;
     const hashedPassword = await hash(password, saltRounds);
@@ -11,7 +11,7 @@ const encryptPassword = async (password) => {
   }
 };
 
-const comparePassword = async (password, dbPassword) => {
+export const comparePassword = async (password, dbPassword) => {
   try {
     const isPasswordValid = await compare(password, dbPassword);
     return isPasswordValid;
@@ -22,4 +22,3 @@ const comparePassword = async (password, dbPassword) => {
 };
 
 
-export default {encryptPassword, comparePassword}

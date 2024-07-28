@@ -1,14 +1,14 @@
 import { Router } from "express";
 const router = Router();
-import refreshController from "../controller/auth/refreshController";
-import loginController from "../controller/auth/loginController";
-import signUpController from "../controller/auth/signupcontroller";
-import logoutController from "../controller/auth/logoutController";
-import { getAccounts, deleteAccounts } from "../controller/accounts";
+import refreshController from "../controller/auth/refreshController.js";
+import LoginController from "../controller/auth/loginController.js";
+import signUpController from "../controller/auth/signupcontroller.js";
+import logoutController from "../controller/auth/logoutController.js";
+import { getAccounts, deleteAccounts } from "../controller/accounts.js";
 
 
 router.post("/sign-up", signUpController);
-router.post("/login", loginController);
+router.post("/login", LoginController);
 router.post("/logout", logoutController);
 router.post("/refresh-token", refreshController);
 router.delete("/delete-accounts", deleteAccounts);

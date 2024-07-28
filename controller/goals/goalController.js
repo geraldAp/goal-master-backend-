@@ -1,7 +1,9 @@
-const Goal = require("../../model/goals").default;
-const Task = require("../../model/task").default;
-const cloudinary = require('../../configs/cloudinaryConfig').default
-const fs = require('fs');
+import Goal from "../../model/goals.js";
+import Task from "../../model/task.js";
+import cloudinary from '../../configs/cloudinaryConfig.js';
+import { unlinkSync } from 'fs';
+
+
 const getAllGoals = async (req, res) => {
   console.log("getting goal");
   let { page, limit, status } = req.query;
@@ -55,7 +57,7 @@ const createGoal = async (req, res) => {
       const result = await cloudinary.uploader.upload(req.file.path);
       imageUrl = result.secure_url; // Get the URL of the uploaded image
       // Delete the temporary file after upload
-      fs.unlinkSync(req.file.path);
+      unlinkSync(req.file.path);
     }
     const goalData = {
       name,
@@ -136,7 +138,7 @@ const deleteAllGoals = async (req, res) => {
   }
 };
 
-module.exports = {
+export  {
   getAllGoals,
   getGoal,
   createGoal,

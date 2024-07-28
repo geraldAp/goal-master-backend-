@@ -1,7 +1,7 @@
-const User = require("../model/user").default;
+import User from "../model/user.js";
 
 
-const getAccounts = async (req, res) => {
+export const getAccounts = async (req, res) => {
   try {
     const accounts = await User.find({});
     if (!accounts) {
@@ -14,7 +14,7 @@ const getAccounts = async (req, res) => {
   }
 };
 
-const deleteAccounts = async (req, res) => {
+export const deleteAccounts = async (req, res) => {
   try {
     const accounts = await User.find({});
     if (!accounts) {
@@ -24,9 +24,9 @@ const deleteAccounts = async (req, res) => {
 
     res.status(200).json({ message: "Deleted Successfully" });
   } catch (error) {
-    console.error("Login error:", error);
+    console.error("Login error:", error);;e;
     return res.status(400).json({ message: error.message });
   }
 };
 
-module.exports = { getAccounts, deleteAccounts };
+

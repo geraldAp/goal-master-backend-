@@ -1,35 +1,45 @@
-const User = require("../../model/user").default;
-const { comparePassword } = require("../../helpers/passwordHelpers").default;
-const { encryptPassword } = require("../../helpers/passwordHelpers").default;
+import User from '../../model/user.js';
+import { comparePassword, encryptPassword } from '../../helpers/passwordHelpers.js';
 
+// Controller for changing the password
 const changePassword = async (req, res) => {
   const { email, oldPassword, newPassword } = req.body;
+
   try {
+    // Check if all fields are provided
     if (!email || !oldPassword || !newPassword) {
       return res.status(400).json({ message: "All fields are required" });
     }
 
+    // Find the user by email
     const user = await User.findOne({ email });
 
+    // Check if user exists
     if (!user) {
       return res.status(400).json({ message: "This user does not exist" });
     }
-    console.log("old Password:", user.password);
-    console.log("New Password:", newPassword);
-    const comparedPassword = await comparePassword(oldPassword, user.password);
 
-    if (!comparedPassword) {
-      return res.status(400).json({ message: "Old password is incorrect " });
+    // Compare the old password with the stored password
+    const isPasswordMatch = await comparePassword(oldPassword, user.password);
+
+    // If passwords do not match, send an error response
+    if (!isPasswordMatch) {
+      return res.status(400).json({ message: "Old password is incorrect" });
     }
+
+    // Encrypt the new password
     const hashedPassword = await encryptPassword(newPassword);
-    if (hashedPassword) {
-      user.password = hashedPassword;
-      await user.save();
-    }
-    res.status(201).json({ message: "Password updated successfully " });
+
+    // Update the user's password and save
+    user.password = hashedPassword;
+    await user.save();
+
+    // Send a success response
+    res.status(201).json({ message: "Password updated successfully" });
   } catch (error) {
-    return res.status(400).json({ message: error.message });
+    // Handle any errors
+    res.status(400).json({ message: error.message });
   }
 };
 
-module.exports = { changePassword };
+export  { changePassword };

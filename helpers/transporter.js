@@ -8,4 +8,4 @@ const transporter = createTransport({
   },
 });
 
-export default { transporter };
+export { transporter };

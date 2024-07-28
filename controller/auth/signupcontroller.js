@@ -1,11 +1,16 @@
-const fs = require("fs");
-const path = require("path");
-const User = require("../../model/user").default;
-const Verification = require("../../model/verification").default;
-const jwt = require("jsonwebtoken");
-const { validateUserSignUpCredentials } = require("../../helpers/validators").default;
-const { encryptPassword } = require("../../helpers/passwordHelpers").default;
-const { transporter } = require("../../helpers/transporter").default;
+import { readFile } from "fs";
+import { join } from "path";
+import User from "../../model/user.js";
+import Verification from "../../model/verification.js";
+import pkg from 'jsonwebtoken';
+import { validateUserSignUpCredentials } from "../../helpers/validators.js";
+import { encryptPassword } from "../../helpers/passwordHelpers.js";
+import { transporter } from "../../helpers/transporter.js";
+
+
+const { sign } = pkg;
+
+
 
 const signUp = async (req, res) => {
   try {
@@ -72,7 +77,7 @@ const signUp = async (req, res) => {
     await newUser.save();
 
     // Setting up the verification system
-    const verificationToken = jwt.sign(
+    const verificationToken = sign(
       { userId: newUser._id },
       process.env.VERIFICATION_TOKEN_SECRET,
       { expiresIn: "1h" }
@@ -83,10 +88,10 @@ const signUp = async (req, res) => {
       token: verificationToken,
     });
 
-    const filePath = path.join(__dirname, "../../views/verificationEmailTemplate.html");
+    const filePath = join(__dirname, "../../views/verificationEmailTemplate.html");
     const verificationLink = `http://localhost:8080/api/verification/verify-email?token=${verificationToken}`;
 
-    fs.readFile(filePath, "utf8", async (err, html) => {
+    readFile(filePath, "utf8", async (err, html) => {
       if (err) {
         console.error("Error reading email template:", err);
         return res.status(500).json({ error: "Internal Server Error" });
@@ -117,4 +122,4 @@ const signUp = async (req, res) => {
   }
 };
 
-module.exports = signUp;
+export default signUp;

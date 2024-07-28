@@ -1,12 +1,11 @@
-const User = require("../../model/user").default;
-const RefreshToken = require("../../model/refreshToken").default;
-const { validateUserLoginCredentials } = require("../../helpers/validators").default;
-const { comparePassword } = require("../../helpers/passwordHelpers").default;
-const {
-  generateRefreshToken,
-  generateAccessToken,
-} = require("../../helpers/generateTokens").default;
-const { use } = require("bcrypt/promises");
+import User from "../../model/user.js";
+import RefreshToken from "../../model/refreshToken.js";
+import { validateUserLoginCredentials } from "../../helpers/validators.js";
+import { comparePassword } from "../../helpers/passwordHelpers.js";
+import { generateRefreshToken, generateAccessToken } from "../../helpers/generateTokens.js";
+
+
+
 const handleLogin = async (req, res) => {
   try {
     const { userName, password } = req.body;
@@ -66,4 +65,4 @@ const handleLogin = async (req, res) => {
   }
 };
 
-module.exports = handleLogin;
+export default handleLogin;

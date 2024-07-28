@@ -1,5 +1,6 @@
-const jwt = require('jsonwebtoken')
-const RefreshToken = require("../../model/refreshToken").default;
+import pkg from 'jsonwebtoken';
+import RefreshToken from "../../model/refreshToken.js";
+const { verify, sign } = pkg;
 
 const refresh = async (req, res) => {
   try {
@@ -14,7 +15,7 @@ const refresh = async (req, res) => {
     // Verify refresh token
     let decoded;
     try {
-      decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+      decoded = verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
     } catch (err) {
       if (err.name === "TokenExpiredError") {
         return res.status(401).json({ error: "Refresh token expired" });
@@ -25,7 +26,7 @@ const refresh = async (req, res) => {
     }
 
     // Generate new access token
-    const accessToken = jwt.sign(
+    const accessToken = sign(
       { userId: decoded.userId },
       process.env.ACCESS_TOKEN_SECRET,
       { expiresIn: "15m" }
@@ -39,4 +40,4 @@ const refresh = async (req, res) => {
   }
 };
 
-module.exports = refresh;
+export default refresh;

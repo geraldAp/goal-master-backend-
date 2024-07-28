@@ -1,5 +1,5 @@
-import { sign } from 'jsonwebtoken';
-
+import pkg from 'jsonwebtoken';
+const { sign } = pkg;
 
 const generateAccessToken = (userId) => {
   return sign({ userId }, process.env.ACCESS_TOKEN_SECRET, {
@@ -14,4 +14,4 @@ const generateRefreshToken = (userId) => {
 };
 
 
-export default {generateAccessToken, generateRefreshToken}
+export  {generateAccessToken, generateRefreshToken}

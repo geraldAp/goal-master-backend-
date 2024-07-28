@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { getAllGoals, createGoal, getGoal, updateGoal, deleteGoal, deleteAllGoals } from "../controller/goals/goalController";
-import { getAllTasks, createTask, deleteTask, updateTask } from "../controller/goals/tasksController";
-import authMiddleWare from "../middleware/verifyJwt";
-import { upload } from "../helpers/imageUploader";
+import { getAllGoals, createGoal, getGoal, updateGoal, deleteGoal, deleteAllGoals } from "../controller/goals/goalController.js";
+import { getAllTasks, createTask, deleteTask, updateTask } from "../controller/goals/tasksController.js";
+import authMiddleWare from "../middleware/verifyJwt.js";
+import { upload } from "../helpers/imageUploader.js";
 const router = Router();
 
 // Apply middleware to all routes

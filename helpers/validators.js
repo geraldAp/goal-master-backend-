@@ -1,5 +1,5 @@
-import { object, string } from "joi";
-
+import pkg from 'joi';
+const { object, string } = pkg;
 
 const validateUserSignUpCredentials = (firstName, lastName, userName, email, password) => {
     const schema = object({
@@ -107,4 +107,4 @@ const validateUserLoginCredentials = (userName, password) => {
   };
 };
 
-export default {validateUserSignUpCredentials , validateUserLoginCredentials}
+export  {validateUserSignUpCredentials , validateUserLoginCredentials}
